@@ -20,8 +20,19 @@ app.post('/posts', (req, res) => {
     id,
     title,
   };
-  res.status(201).send(posts[id]); // Sending a 201 Created status and the created post
+  res.status(201).send(posts[id]); 
 });
+
+app.delete('/posts/:id', (req, res) => {
+  const postId = req.params.id;
+  if (!posts[postId]) {
+    return res.status(404).send({ error: 'Post not found' });
+  }
+
+  delete posts[postId];
+  res.status(204).send();
+});
+
 
 app.listen(4000, () => {
   console.log('Listening on port 4000');
